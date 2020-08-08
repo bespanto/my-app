@@ -1,36 +1,25 @@
 import React, { useState } from "react";
 import RequestCard from "./RequestCard";
 import requestData from "./requestData";
-import "./App.css";
+import shortid from 'shortid';
 
 function Main(props) {
 
-  function handleRemove(e, id) {
-    e.preventDefault();
-    let arr = [...requests];
-    console.log({arr});
-    let filteredArray = arr.filter(item => item.props.id !== id);
-    console.log({filteredArray});
-    setRequests(filteredArray);
-  }
-
-  const req = requestData.map((item) => (
-    <RequestCard
-      key={item.id}
-      id={item.id}
-      firstName={item.firstName}
-      lastName={item.lastName}
-      age={item.age}
-      request={item.request}
-      remove={handleRemove}
-    />
-  ));
-
-  const [requests, setRequests] = useState(req);
+  const [requests, setRequests] = useState(requestData);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [request, setRequest] = useState("");
+
+  function handleRemove(e, id) {
+    e.preventDefault();
+    let arr = [...requests];
+    console.log(arr);
+    let filteredArray = arr.filter(item => item.id !== id);
+    console.log(filteredArray);
+    setRequests(filteredArray);
+    console.log(requests);
+  }
 
   function handleChange(event) {
     console.log(`Change State of ${event.target.name}`);
@@ -52,29 +41,37 @@ function Main(props) {
     }
   }
 
-
-
   function handleSubmit(event) {
     console.log("A name was submitted: " + firstName);
     event.preventDefault();
-    const index = requests.length + 1;
+    const index = shortid.generate()
     setRequests(
       requests.concat(
-        <RequestCard
-          key={index}
-          id={index}
-          firstName={firstName}
-          lastName={lastName}
-          age={age}
-          request={request}
-          remove={handleRemove}
-        />
+        {
+          id: index,
+          firstName: firstName,
+          lastName: lastName,
+          age: age,
+          request: request
+        }
       )
     );
   }
 
+  const requestCards = requests.map((item) => (
+    <RequestCard
+      key={item.id}
+      id={item.id}
+      firstName={item.firstName}
+      lastName={item.lastName}
+      age={item.age}
+      request={item.request}
+      remove={handleRemove}
+    />
+  ));
+
   return (
-    <div className="Box">
+    <div>
       <h1>Incoming requests: {requests.length}!</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -114,8 +111,7 @@ function Main(props) {
         <br />
         <input type="submit" value="Submit" />
       </form>
-      {/* <button onClick={(e) => handleRemove(e, 0)}>Remove</button> */}
-      {requests}
+      {requestCards}
     </div>
   );
 }
