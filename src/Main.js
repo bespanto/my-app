@@ -114,7 +114,7 @@ function Main(props) {
         <br />
         <input type="submit" value="Submit" />
       </form>
-      <button onClick={(e) => handleRemove(e, 0)}>Remove</button>
+      {/* <button onClick={(e) => handleRemove(e, 0)}>Remove</button> */}
       {requests}
     </div>
   );
