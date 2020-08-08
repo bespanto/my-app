@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import Request from "./Request";
+import RequestCard from "./RequestCard";
 import requestData from "./requestData";
 import "./App.css";
 
 function Main(props) {
+
+  function handleRemove(e, id) {
+    e.preventDefault();
+    let arr = [...requests];
+    console.log({arr});
+    let filteredArray = arr.filter(item => item.props.id !== id);
+    console.log({filteredArray});
+    setRequests(filteredArray);
+  }
+
   const req = requestData.map((item) => (
-    <Request
+    <RequestCard
       key={item.id}
       id={item.id}
       firstName={item.firstName}
       lastName={item.lastName}
       age={item.age}
       request={item.request}
-      // remove={handleRemove}
+      remove={handleRemove}
     />
   ));
 
@@ -22,7 +32,6 @@ function Main(props) {
   const [age, setAge] = useState("");
   const [request, setRequest] = useState("");
 
-  
   function handleChange(event) {
     console.log(`Change State of ${event.target.name}`);
     switch (event.target.name) {
@@ -43,26 +52,22 @@ function Main(props) {
     }
   }
 
-  function handleRemove(id) {
-    console.log(`remove ${id}`);
-    let arr = [...requests];
-    arr.splice(id, 1);
-    setRequests(arr);
-  }
+
 
   function handleSubmit(event) {
     console.log("A name was submitted: " + firstName);
     event.preventDefault();
+    const index = requests.length + 1;
     setRequests(
       requests.concat(
-        <Request
-          key={requests.lastIndexOf++}
-          id={requests.lastIndexOf++}
+        <RequestCard
+          key={index}
+          id={index}
           firstName={firstName}
           lastName={lastName}
           age={age}
           request={request}
-          // remove={handleRemove}
+          remove={handleRemove}
         />
       )
     );
@@ -109,7 +114,7 @@ function Main(props) {
         <br />
         <input type="submit" value="Submit" />
       </form>
-      <button onClick={(e) => handleRemove(0)}>Remove</button>
+      <button onClick={(e) => handleRemove(e, 0)}>Remove</button>
       {requests}
     </div>
   );
