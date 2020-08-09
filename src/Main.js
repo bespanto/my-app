@@ -44,18 +44,20 @@ function Main(props) {
   function handleSubmit(event) {
     console.log("A name was submitted: " + firstName);
     event.preventDefault();
-    const index = shortid.generate()
-    setRequests(
-      requests.concat(
-        {
-          id: index,
-          firstName: firstName,
-          lastName: lastName,
-          age: age,
-          request: request
-        }
-      )
-    );
+    const index = shortid.generate();
+
+    const newItem = {
+      id: index,
+      firstName: firstName,
+      lastName: lastName,
+      age: age,
+      request: request
+    }
+    setRequests(requests.concat(newItem));
+    setFirstName("");
+    setLastName("");
+    setAge("");
+    setRequest("");
   }
 
   const requestCards = requests.map((item) => (
