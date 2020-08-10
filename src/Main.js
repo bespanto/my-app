@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import RequestCard from "./RequestCard";
+import TabPanel from "./TabPanel";
 import requestData from "./requestData";
 import shortid from 'shortid';
+import "./App.css";
 
 function Main(props) {
 
@@ -10,6 +12,12 @@ function Main(props) {
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [request, setRequest] = useState("");
+  const [activeTab, setActiveTab] = useState(0);
+
+  function cahngeTab(index) {
+    console.log(`activatedTab: ${index}`)
+    setActiveTab(index);
+  }
 
   function handleRemove(e, id) {
     e.preventDefault();
@@ -69,46 +77,55 @@ function Main(props) {
 
   return (
     <main>
+      <div className="flex-container">
+        <input type="button" value="Make request" className="button" onClick={() => cahngeTab(0)}></input>
+        <input type="button" value="Request list" className="button" onClick={() => cahngeTab(1)}></input>
+      </div>
       <h1>Incoming requests: {requests.length}!</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First name:
+
+      <TabPanel index={0} activatedTab={activeTab}>
+        <form onSubmit={handleSubmit}>
+          <label>
+            First name:
           <input
-            name="firstName"
-            type="text"
-            value={firstName}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Last name:
+              name="firstName"
+              type="text"
+              value={firstName}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Last name:
           <input
-            name="lastName"
-            type="text"
-            value={lastName}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Age:
+              name="lastName"
+              type="text"
+              value={lastName}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Age:
           <input name="age" type="number" value={age} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Request:
+          </label>
+          <br />
+          <label>
+            Request:
           <input
-            name="request"
-            type="text"
-            value={request}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
-      {requestCards}
+              name="request"
+              type="text"
+              value={request}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+      </TabPanel>
+      <TabPanel index={1} activatedTab={activeTab}>
+        {requestCards}
+      </TabPanel>
     </main>
   );
 }
