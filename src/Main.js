@@ -14,11 +14,8 @@ function Main(props) {
   function handleRemove(e, id) {
     e.preventDefault();
     let arr = [...requests];
-    console.log(arr);
     let filteredArray = arr.filter(item => item.id !== id);
-    console.log(filteredArray);
     setRequests(filteredArray);
-    console.log(requests);
   }
 
   function handleChange(event) {
@@ -42,10 +39,8 @@ function Main(props) {
   }
 
   function handleSubmit(event) {
-    console.log("A name was submitted: " + firstName);
     event.preventDefault();
     const index = shortid.generate();
-
     const newItem = {
       id: index,
       firstName: firstName,
@@ -73,7 +68,7 @@ function Main(props) {
   ));
 
   return (
-    <div>
+    <main>
       <h1>Incoming requests: {requests.length}!</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -114,7 +109,7 @@ function Main(props) {
         <input type="submit" value="Submit" />
       </form>
       {requestCards}
-    </div>
+    </main>
   );
 }
 

@@ -13,8 +13,6 @@ function RequestCard(props) {
       request: props.request
     }
     var newItemAsJSON = JSON.stringify(obj);
-    console.log(newItemAsJSON);
-
     return newItemAsJSON;
   }
 

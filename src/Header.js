@@ -1,16 +1,13 @@
 import React from 'react';
+import "./App.css";
 
 function Header(props) {
 
-  function handleClickOnHeader() {
-    console.log('Click on Header');
-  }
-
   return (
-    <div>
+    <header className="flex-container">
+      <img src="logo.svg" alt="logo"></img>
       <h1>Header line of App {props.appName}!</h1>
-      <button onClick={handleClickOnHeader}>Click on Header</button>
-    </div>
+    </header>
   );
 }
 

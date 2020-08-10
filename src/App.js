@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Main from "./Main";
+import Footer from "./Footer";
 import "./App.css";
 
 function App() {
@@ -8,12 +9,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="Box">
         <Header appName={"My App"} />
-      </header>
-      <main className="Box">
         <Main firstName={"Max"} />
-      </main>
+        <Footer />
     </div>
   );
 }
