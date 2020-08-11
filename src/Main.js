@@ -76,51 +76,57 @@ function Main(props) {
   ));
 
   return (
-    <main>
+    <main className="main">
       <div className="flex-container">
         <input type="button" value="Make request" className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value="Request list" className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value={'Request list (' + requests.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
       </div>
-      <h1>Incoming requests: {requests.length}!</h1>
-
+      <br />
       <TabPanel index={0} activatedTab={activeTab}>
         <form onSubmit={handleSubmit}>
-          <label>
-            First name:
-          <input
-              name="firstName"
-              type="text"
-              value={firstName}
-              onChange={handleChange}
-            />
-          </label>
+          <div className="grid-container">
+            <div className="grid-item">
+              First name:
+            </div>
+            <div className="grid-item">
+              <input
+                name="firstName"
+                type="text"
+                value={firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid-item">
+              Last name:
+            </div>
+            <div className="grid-item">
+              <input
+                name="lastName"
+                type="text"
+                value={lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid-item">
+              Age:
+            </div>
+            <div className="grid-item">
+              <input name="age" type="number" value={age} onChange={handleChange} />
+            </div>
+            <div className="grid-item">
+              Request:
+            </div>
+            <div className="grid-item">
+              <input
+                name="request"
+                type="text"
+                value={request}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
           <br />
-          <label>
-            Last name:
-          <input
-              name="lastName"
-              type="text"
-              value={lastName}
-              onChange={handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Age:
-          <input name="age" type="number" value={age} onChange={handleChange} />
-          </label>
-          <br />
-          <label>
-            Request:
-          <input
-              name="request"
-              type="text"
-              value={request}
-              onChange={handleChange}
-            />
-          </label>
-          <br />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" className="button" />
         </form>
       </TabPanel>
       <TabPanel index={1} activatedTab={activeTab}>

@@ -18,13 +18,13 @@ function RequestCard(props) {
 
   return (
     <div className="Box">
-      <h3>Name: {props.firstName} {props.lastName}</h3>
-      <h3>Age: {props.age}</h3>
-      <h3>Request: {props.request}</h3>
+      <p>Name: {props.firstName} {props.lastName}</p>
+      <p>Age: {props.age}</p>
+      <p>Request: {props.request}</p>
       <div>
         <QRCode value={createQRCode()} level="L" />
       </div>
-      <button onClick={(e) => props.remove(e, props.id)}>
+      <button onClick={(e) => props.remove(e, props.id)} className="button">
         Remove
       </button>
     </div>

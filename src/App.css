@@ -23,11 +23,22 @@
   border-color: blueviolet;
 }
 
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+
+.grid-item {
+  padding: 5px;
+  text-align: left;
+}
+
 .button {
   background-color: blueviolet;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -36,7 +47,7 @@
   cursor: pointer;
 }
 
-main {
+.main {
   display: flex;
   flex-direction: column;
   border-style: solid;
