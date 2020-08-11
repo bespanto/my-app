@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import QRCode from 'qrcode.react';
 import "./App.css";
 
 function RequestCard(props) {
 
-  function createQRCode() {
+  let [showQRCode, setShowQRCode] = useState(false);
 
+  function handleShowQRCode() {
+    console.log('handleShowQRCode')
+    setShowQRCode(!showQRCode);
+  }
+
+  function createQRCode() {
     const obj = {
       firstName: props.firstName,
       lastName: props.lastName,
@@ -22,10 +28,13 @@ function RequestCard(props) {
       <p>Age: {props.age}</p>
       <p>Request: {props.request}</p>
       <div>
-        <QRCode value={createQRCode()} level="L" />
+        {showQRCode && <QRCode value={createQRCode()} level="L"/>}
       </div>
       <button onClick={(e) => props.remove(e, props.id)} className="button">
         Remove
+      </button>
+      <button onClick={handleShowQRCode} className="button">
+        Show QR-Code
       </button>
     </div>
   );
