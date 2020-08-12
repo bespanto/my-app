@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import RequestCard from "./RequestCard";
+import PersonalDataCard from "./PersonalDataCard";
 import TabPanel from "./TabPanel";
-import requestData from "./requestData";
+import persData from "./personalDataSet";
 import shortid from 'shortid';
 import "./App.css";
 import Popup from "./Popup";
 
 function Main(props) {
 
-  const [requests, setRequests] = useState(requestData);
+  const [personalDataSet, setPersonalDataSet] = useState(persData);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [request, setRequest] = useState("");
+  const [address, setAddress] = useState("");
+  const [telefon, setTelefon] = useState("");
   const [activeTab, setActiveTab] = useState(0);
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -27,9 +27,9 @@ function Main(props) {
 
   function handleRemove(e, id) {
     e.preventDefault();
-    let arr = [...requests];
+    let arr = [...personalDataSet];
     let filteredArray = arr.filter(item => item.id !== id);
-    setRequests(filteredArray);
+    setPersonalDataSet(filteredArray);
   }
 
   function handleChange(event) {
@@ -41,11 +41,11 @@ function Main(props) {
       case "lastName":
         setLastName(event.target.value);
         break;
-      case "age":
-        setAge(event.target.value);
+      case "address":
+        setAddress(event.target.value);
         break;
-      case "request":
-        setRequest(event.target.value);
+      case "telefon":
+        setTelefon(event.target.value);
         break;
       default:
         break;
@@ -59,24 +59,24 @@ function Main(props) {
       id: index,
       firstName: firstName,
       lastName: lastName,
-      age: age,
-      request: request
+      address: address,
+      telefon: telefon
     }
-    setRequests(requests.concat(newItem));
+    setPersonalDataSet(personalDataSet.concat(newItem));
     setFirstName("");
     setLastName("");
-    setAge("");
-    setRequest("");
+    setAddress("");
+    setTelefon("");
   }
 
-  const requestCards = requests.map((item) => (
-    <RequestCard
+  const dataCards = personalDataSet.map((item) => (
+    <PersonalDataCard
       key={item.id}
       id={item.id}
       firstName={item.firstName}
       lastName={item.lastName}
-      age={item.age}
-      request={item.request}
+      address={item.address}
+      telefon={item.telefon}
       remove={handleRemove}
     />
   ));
@@ -84,8 +84,8 @@ function Main(props) {
   return (
     <main className="main">
       <div className="flex-container">
-        <input type="button" value="Make request" className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value={'Request list (' + requests.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value="Personal data" className="button" onClick={() => cahngeTab(0)}></input>
+        <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
         <input type="button" value="Popup" className="button" onClick={() => togglePopup(true)}></input>
       </div>
       <br />
@@ -115,19 +115,19 @@ function Main(props) {
               />
             </div>
             <div className="grid-item">
-              Age:
+              Address:
             </div>
             <div className="grid-item">
-              <input name="age" type="number" value={age} onChange={handleChange} />
+              <input name="address" type="text" value={address} onChange={handleChange} />
             </div>
             <div className="grid-item">
-              Request:
+              Telefon:
             </div>
             <div className="grid-item">
               <input
-                name="request"
+                name="telefon"
                 type="text"
-                value={request}
+                value={telefon}
                 onChange={handleChange}
               />
             </div>
@@ -137,7 +137,7 @@ function Main(props) {
         </form>
       </TabPanel>
       <TabPanel index={1} activatedTab={activeTab}>
-        {requestCards}
+        {dataCards}
       </TabPanel>
       {popupVisible && <Popup text="Popup content" closePopup={togglePopup}/>}
     </main>

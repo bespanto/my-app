@@ -7,7 +7,7 @@ function Header(props) {
   return (
     <header className="flex-container">
       <img src={Logo} alt="logo"></img>
-      <h1>Header line of App {props.appName}!</h1>
+      <h1>Header of {props.appName}!</h1>
     </header>
   );
 }

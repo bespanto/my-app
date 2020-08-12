@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QRCode from 'qrcode.react';
 import "./App.css";
 
-function RequestCard(props) {
+function PersonalDataCard(props) {
 
   let [showQRCode, setShowQRCode] = useState(false);
 
@@ -15,8 +15,8 @@ function RequestCard(props) {
     const obj = {
       firstName: props.firstName,
       lastName: props.lastName,
-      age: props.age,
-      request: props.request
+      address: props.address,
+      telefon: props.telefon
     }
     var newItemAsJSON = JSON.stringify(obj);
     return newItemAsJSON;
@@ -25,8 +25,8 @@ function RequestCard(props) {
   return (
     <div className="Box">
       <p>Name: {props.firstName} {props.lastName}</p>
-      <p>Age: {props.age}</p>
-      <p>Request: {props.request}</p>
+      <p>Address: {props.address}</p>
+      <p>Telefon: {props.telefon}</p>
       <div>
         {showQRCode && <QRCode value={createQRCode()} level="L"/>}
       </div>
@@ -40,4 +40,4 @@ function RequestCard(props) {
   );
 }
 
-export default RequestCard;
+export default PersonalDataCard;
