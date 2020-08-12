@@ -4,6 +4,7 @@ import TabPanel from "./TabPanel";
 import requestData from "./requestData";
 import shortid from 'shortid';
 import "./App.css";
+import Popup from "./Popup";
 
 function Main(props) {
 
@@ -13,6 +14,11 @@ function Main(props) {
   const [age, setAge] = useState("");
   const [request, setRequest] = useState("");
   const [activeTab, setActiveTab] = useState(0);
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  function togglePopup(isVisible) {
+    setPopupVisible(isVisible);
+  }
 
   function cahngeTab(index) {
     console.log(`activatedTab: ${index}`)
@@ -80,6 +86,7 @@ function Main(props) {
       <div className="flex-container">
         <input type="button" value="Make request" className="button" onClick={() => cahngeTab(0)}></input>
         <input type="button" value={'Request list (' + requests.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value="Popup" className="button" onClick={() => togglePopup(true)}></input>
       </div>
       <br />
       <TabPanel index={0} activatedTab={activeTab}>
@@ -132,6 +139,7 @@ function Main(props) {
       <TabPanel index={1} activatedTab={activeTab}>
         {requestCards}
       </TabPanel>
+      {popupVisible && <Popup text="Popup content" closePopup={togglePopup}/>}
     </main>
   );
 }
