@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import "./App.css";
 import Popup from "./Popup";
 
+
 function Main(props) {
 
   const [personalDataSet, setPersonalDataSet] = useState(persData);
@@ -54,6 +55,7 @@ function Main(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    
     const index = shortid.generate();
     const newItem = {
       id: index,

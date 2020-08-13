@@ -1,10 +1,43 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import QRCode from 'qrcode.react';
 import "./App.css";
+import { changePersonalData } from './actions'
 
 function PersonalDataCard(props) {
+  const [firstName, setFirstName] = useState(props.firstName);
+  const [lastName, setLastName] = useState(props.lastName);
+  const [address, setAddress] = useState(props.address);
+  const [telefon, setTelefon] = useState(props.telefon);
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const dispatch = useDispatch();
+  const personalDataSet = useSelector(state => state.personalData);
 
-  let [showQRCode, setShowQRCode] = useState(false);
+  const obj = {
+    id: props.id,
+    firstName: props.firstName,
+    lastName: props.lastName,
+    address: props.address,
+    telefon: props.telefon
+  }
+
+  function handleEditData() {
+    setEditMode(true);
+  }
+
+  function handleSaveData(id) {
+    console.log(`Edit ${id}`);
+
+    let arr = [...personalDataSet];
+    arr.forEach(item => {
+      if(item.id === props.id)
+        item.firstName = firstName;
+    });
+    console.log(arr)
+    dispatch(changePersonalData(arr));
+    setEditMode(false);
+  }
 
   function handleShowQRCode() {
     console.log('handleShowQRCode')
@@ -12,31 +45,100 @@ function PersonalDataCard(props) {
   }
 
   function createQRCode() {
-    const obj = {
-      firstName: props.firstName,
-      lastName: props.lastName,
-      address: props.address,
-      telefon: props.telefon
-    }
     var newItemAsJSON = JSON.stringify(obj);
     return newItemAsJSON;
   }
 
+  function handleChange(event) {
+    console.log(`Change State of ${event.target.name}`);
+    switch (event.target.name) {
+      case "firstName":
+        setFirstName(event.target.value);
+        break;
+      case "lastName":
+        setLastName(event.target.value);
+        break;
+      case "address":
+        setAddress(event.target.value);
+        break;
+      case "telefon":
+        setTelefon(event.target.value);
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="Box">
-      <p>Name: {props.firstName} {props.lastName}</p>
-      <p>Address: {props.address}</p>
-      <p>Telefon: {props.telefon}</p>
-      <div>
-        {showQRCode && <QRCode value={createQRCode()} level="L"/>}
-      </div>
-      <button onClick={(e) => props.remove(e, props.id)} className="button">
-        Remove
+      {!editMode ?
+        < div >
+          <p>Name: {firstName} {lastName}</p>
+          <p>Address: {address}</p>
+          <p>Telefon: {telefon}</p>
+          <div>
+            {showQRCode && <QRCode value={createQRCode()} level="L" />}
+          </div>
+          <button onClick={(e) => props.remove(e, props.id)} className="button">
+            Remove
+        </button>
+          <button onClick={handleShowQRCode} className="button">
+            Show QR-Code
+        </button>
+          <button onClick={handleEditData} className="button">
+            Edit data
       </button>
-      <button onClick={handleShowQRCode} className="button">
-        Show QR-Code
-      </button>
-    </div>
+        </div>
+        :
+        <form onSubmit={() => handleSaveData(props.id)}>
+          <div className="grid-container">
+            <div className="grid-item">
+              First name:
+          </div>
+            <div className="grid-item">
+              <input
+                name="firstName"
+                type="text"
+                value={firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid-item">
+              Last name:
+          </div>
+            <div className="grid-item">
+              <input
+                name="lastName"
+                type="text"
+                value={lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid-item">
+              Address:
+          </div>
+            <div className="grid-item">
+              <input name="address" type="text" value={address} onChange={handleChange} />
+            </div>
+            <div className="grid-item">
+              Telefon:
+          </div>
+            <div className="grid-item">
+              <input
+                name="telefon"
+                type="text"
+                value={telefon}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <br />
+          <input type="submit" value="Save Data" className="button" />
+        </form>
+      }
+
+
+    </div >
   );
 }
 
