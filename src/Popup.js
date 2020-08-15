@@ -8,7 +8,7 @@ function Popup(props) {
       <div className='popup-content'>
         {children}
         <div>
-          <button onClick={(e) => props.closePopup(false)} className="button">close me</button>
+          <button onClick={(e) => props.showPopup(false)} className="button">Close</button>
         </div>
       </div>
     </div>

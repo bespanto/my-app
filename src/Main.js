@@ -80,11 +80,10 @@ function Main(props) {
     <main className="flex-container-column">
       <div className="flex-container">
         <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value="Personal data" className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value="Add personal data entry" className="button" onClick={() => cahngeTab(1)}></input>
       </div>
       <br />
       <TabPanel index={0} activatedTab={activeTab}>
-        <input type="button" value="Add Item" className="button" onClick={() => cahngeTab(1)}></input>
         {dataCards}
       </TabPanel>
       <TabPanel index={1} activatedTab={activeTab}>

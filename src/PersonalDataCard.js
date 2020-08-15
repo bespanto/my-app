@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import QRCode from 'qrcode.react';
 import "./App.css";
 import { changePersonalData } from './actions'
@@ -13,7 +13,6 @@ function PersonalDataCard(props) {
   const [editMode, setEditMode] = useState(false);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const dispatch = useDispatch();
-  const personalDataSet = useSelector(state => state.personalData);
 
   const obj = {
     id: props.id,
@@ -134,7 +133,7 @@ function PersonalDataCard(props) {
         </form>
       }
       {popupIsVisible &&
-        <Popup text="Popup content" personalDataId={props.id} closePopup={handleShowPopup}>
+        <Popup text="Popup content" personalDataId={props.id} showPopup={handleShowPopup}>
           <div>
             <QRCode value={createQRCode()} level="L" />
           </div>
