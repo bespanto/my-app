@@ -5,9 +5,16 @@ export const changePersonalData = (obj) => {
     };
 };
 
-export const changeFirstName = (firstName) => {
+export const removePersonalData = (id) => {
     return {
-        type: 'CHANGE_FIRST_NAME',
-        payload: firstName
+        type: 'REMOVE_PERSONAL_DATA',
+        payload: id
+    };
+};
+
+export const addPersonalData = (obj) => {
+    return {
+        type: 'ADD_PERSONAL_DATA',
+        payload: obj
     };
 };

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import PersonalDataCard from "./PersonalDataCard";
 import TabPanel from "./TabPanel";
-import persData from "./personalDataSet";
+import { removePersonalData, addPersonalData } from './actions'
 import shortid from 'shortid';
 import "./App.css";
 
-function Main(props) {
 
-  const [personalDataSet, setPersonalDataSet] = useState(persData);
+function Main(props) {
+  const personalDataSet = useSelector(state => state.personalData);
+  const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -21,9 +23,7 @@ function Main(props) {
 
   function handleRemove(e, id) {
     e.preventDefault();
-    let arr = [...personalDataSet];
-    let filteredArray = arr.filter(item => item.id !== id);
-    setPersonalDataSet(filteredArray);
+    dispatch(removePersonalData(id));
   }
 
   function handleChange(event) {
@@ -57,7 +57,7 @@ function Main(props) {
       address: address,
       telefon: telefon
     }
-    setPersonalDataSet(personalDataSet.concat(newItem));
+    dispatch(addPersonalData(newItem));
     setFirstName("");
     setLastName("");
     setAddress("");
@@ -79,11 +79,15 @@ function Main(props) {
   return (
     <main className="flex-container-column">
       <div className="flex-container">
-        <input type="button" value="Personal data" className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
+        <input type="button" value="Personal data" className="button" onClick={() => cahngeTab(1)}></input>
       </div>
       <br />
       <TabPanel index={0} activatedTab={activeTab}>
+        <input type="button" value="Add Item" className="button" onClick={() => cahngeTab(1)}></input>
+        {dataCards}
+      </TabPanel>
+      <TabPanel index={1} activatedTab={activeTab}>
         <form onSubmit={handleSubmit}>
           <div className="grid-container">
             <div className="grid-item">
@@ -130,9 +134,7 @@ function Main(props) {
           <input type="submit" value="Submit" className="button" />
         </form>
       </TabPanel>
-      <TabPanel index={1} activatedTab={activeTab}>
-        {dataCards}
-      </TabPanel>
+
     </main>
   );
 }

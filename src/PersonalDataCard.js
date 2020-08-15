@@ -28,15 +28,15 @@ function PersonalDataCard(props) {
   }
 
   function handleSaveData(id) {
-    console.log(`Edit ${id}`);
-
-    let arr = [...personalDataSet];
-    arr.forEach(item => {
-      if (item.id === props.id)
-        item.firstName = firstName;
-    });
-    console.log(arr)
-    dispatch(changePersonalData(arr));
+    
+    const newItem = {
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      telefon: telefon
+    }
+    dispatch(changePersonalData(newItem));
     setEditMode(false);
   }
 
