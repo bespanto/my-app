@@ -10,7 +10,6 @@ function PersonalDataCard(props) {
   const [lastName, setLastName] = useState(props.lastName);
   const [address, setAddress] = useState(props.address);
   const [telefon, setTelefon] = useState(props.telefon);
-  const [showQRCode, setShowQRCode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const dispatch = useDispatch();
@@ -43,11 +42,6 @@ function PersonalDataCard(props) {
 
   function handleShowPopup(isVisible) {
     setPopupIsVisible(isVisible);
-  }
-
-  function handleShowQRCode() {
-    console.log('handleShowQRCode')
-    setShowQRCode(!showQRCode);
   }
 
   function createQRCode() {

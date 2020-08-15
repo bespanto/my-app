@@ -4,8 +4,6 @@ import TabPanel from "./TabPanel";
 import persData from "./personalDataSet";
 import shortid from 'shortid';
 import "./App.css";
-import Popup from "./Popup";
-
 
 function Main(props) {
 
@@ -15,7 +13,7 @@ function Main(props) {
   const [address, setAddress] = useState("");
   const [telefon, setTelefon] = useState("");
   const [activeTab, setActiveTab] = useState(0);
-  
+
   function cahngeTab(index) {
     console.log(`activatedTab: ${index}`)
     setActiveTab(index);
@@ -50,7 +48,7 @@ function Main(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    
+
     const index = shortid.generate();
     const newItem = {
       id: index,

@@ -2,7 +2,7 @@ import React from 'react';
 import "./App.css";
 
 function Popup(props) {
-  const { children, personalDataId } = props;
+  const {children} = props;
   return (
     <div className='popup'>
       <div className='popup-content'>
