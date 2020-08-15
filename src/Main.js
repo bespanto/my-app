@@ -15,12 +15,7 @@ function Main(props) {
   const [address, setAddress] = useState("");
   const [telefon, setTelefon] = useState("");
   const [activeTab, setActiveTab] = useState(0);
-  const [popupVisible, setPopupVisible] = useState(false);
-
-  function togglePopup(isVisible) {
-    setPopupVisible(isVisible);
-  }
-
+  
   function cahngeTab(index) {
     console.log(`activatedTab: ${index}`)
     setActiveTab(index);
@@ -84,11 +79,10 @@ function Main(props) {
   ));
 
   return (
-    <main className="main">
+    <main className="flex-container-column">
       <div className="flex-container">
         <input type="button" value="Personal data" className="button" onClick={() => cahngeTab(0)}></input>
         <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(1)}></input>
-        <input type="button" value="Popup" className="button" onClick={() => togglePopup(true)}></input>
       </div>
       <br />
       <TabPanel index={0} activatedTab={activeTab}>
@@ -141,7 +135,6 @@ function Main(props) {
       <TabPanel index={1} activatedTab={activeTab}>
         {dataCards}
       </TabPanel>
-      {popupVisible && <Popup text="Popup content" closePopup={togglePopup}/>}
     </main>
   );
 }

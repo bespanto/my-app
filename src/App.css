@@ -36,6 +36,7 @@
 
 .button {
   background-color: blueviolet;
+  width: fit-content;
   border: none;
   color: white;
   padding: 10px 15px;
@@ -47,7 +48,7 @@
   cursor: pointer;
 }
 
-.main {
+.flex-container-column {
   display: flex;
   flex-direction: column;
   border-style: solid;
@@ -70,6 +71,9 @@
 }
 
 .popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
   left: 25%;
   right: 25%;

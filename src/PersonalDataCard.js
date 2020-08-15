@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import QRCode from 'qrcode.react';
 import "./App.css";
 import { changePersonalData } from './actions'
+import Popup from "./Popup";
 
 function PersonalDataCard(props) {
   const [firstName, setFirstName] = useState(props.firstName);
@@ -11,6 +12,7 @@ function PersonalDataCard(props) {
   const [telefon, setTelefon] = useState(props.telefon);
   const [showQRCode, setShowQRCode] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [popupIsVisible, setPopupIsVisible] = useState(false);
   const dispatch = useDispatch();
   const personalDataSet = useSelector(state => state.personalData);
 
@@ -31,12 +33,16 @@ function PersonalDataCard(props) {
 
     let arr = [...personalDataSet];
     arr.forEach(item => {
-      if(item.id === props.id)
+      if (item.id === props.id)
         item.firstName = firstName;
     });
     console.log(arr)
     dispatch(changePersonalData(arr));
     setEditMode(false);
+  }
+
+  function handleShowPopup(isVisible) {
+    setPopupIsVisible(isVisible);
   }
 
   function handleShowQRCode() {
@@ -76,13 +82,10 @@ function PersonalDataCard(props) {
           <p>Name: {firstName} {lastName}</p>
           <p>Address: {address}</p>
           <p>Telefon: {telefon}</p>
-          <div>
-            {showQRCode && <QRCode value={createQRCode()} level="L" />}
-          </div>
           <button onClick={(e) => props.remove(e, props.id)} className="button">
             Remove
         </button>
-          <button onClick={handleShowQRCode} className="button">
+          <button onClick={(e) => handleShowPopup(true)} className="button">
             Show QR-Code
         </button>
           <button onClick={handleEditData} className="button">
@@ -136,7 +139,12 @@ function PersonalDataCard(props) {
           <input type="submit" value="Save Data" className="button" />
         </form>
       }
-
+      {popupIsVisible &&
+        <Popup text="Popup content" personalDataId={props.id} closePopup={handleShowPopup}>
+          <div>
+            <QRCode value={createQRCode()} level="L" />
+          </div>
+        </Popup>}
 
     </div >
   );
