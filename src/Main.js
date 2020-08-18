@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import PersonalDataCard from "./PersonalDataCard";
 import TabPanel from "./TabPanel";
-import { removePersonalData, addPersonalData } from './actions'
 import shortid from 'shortid';
 import "./App.css";
+import * as PersonalDataSlice from "./redux/PersonalDataSlice";
 
 
 function Main(props) {
-  const personalDataSet = useSelector(state => state.personalData);
+  const personalData = useSelector((state)=> PersonalDataSlice.selectPersonalData(state))
+  console.log(personalData)
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,11 +24,12 @@ function Main(props) {
 
   function handleRemove(e, id) {
     e.preventDefault();
-    dispatch(removePersonalData(id));
+    dispatch(PersonalDataSlice.removePersonalData(id));
   }
 
   function handleChange(event) {
     console.log(`Change State of ${event.target.name}`);
+    console.log(personalData);
     switch (event.target.name) {
       case "firstName":
         setFirstName(event.target.value);
@@ -48,23 +50,24 @@ function Main(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
     const index = shortid.generate();
     const newItem = {
+      key: index,
       id: index,
       firstName: firstName,
       lastName: lastName,
       address: address,
       telefon: telefon
     }
-    dispatch(addPersonalData(newItem));
+    dispatch(PersonalDataSlice.addPersonalData(newItem));
+    console.log(personalData);
     setFirstName("");
     setLastName("");
     setAddress("");
     setTelefon("");
   }
 
-  const dataCards = personalDataSet.map((item) => (
+  const dataCards = personalData.map((item) => (
     <PersonalDataCard
       key={item.id}
       id={item.id}
@@ -79,7 +82,7 @@ function Main(props) {
   return (
     <main className="flex-container-column">
       <div className="flex-container">
-        <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
+        <input type="button" value={'Data entries (' + personalData.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
         <input type="button" value="Add personal data entry" className="button" onClick={() => cahngeTab(1)}></input>
       </div>
       <br />
