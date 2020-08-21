@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import PersonalDataCard from "./PersonalDataCard";
+import ChartPanel from "./ChartPanel";
 import TabPanel from "./TabPanel";
 import { removePersonalData, addPersonalData } from './actions'
 import shortid from 'shortid';
@@ -79,8 +80,9 @@ function Main(props) {
   return (
     <main className="flex-container-column">
       <div className="flex-container">
-        <input type="button" value={'Data entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value="Add personal data entry" className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value={'Entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
+        <input type="button" value="Add entry" className="button" onClick={() => cahngeTab(1)}></input>
+        <input type="button" value="Charts" className="button" onClick={() => cahngeTab(2)}></input>
       </div>
       <br />
       <TabPanel index={0} activatedTab={activeTab}>
@@ -133,7 +135,9 @@ function Main(props) {
           <input type="submit" value="Submit" className="button" />
         </form>
       </TabPanel>
-
+      <TabPanel index={2} activatedTab={activeTab}>
+        <ChartPanel />
+      </TabPanel>
     </main>
   );
 }
