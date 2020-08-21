@@ -27,7 +27,6 @@ function ChartPanel(props) {
           l.push(k);
           d.push(obj[k]['4. close'])
         }
-        printData(l)
         setGLabels(l);
         setGData(d);
         setTitle('Weekly IBM stock time series ');
@@ -35,10 +34,6 @@ function ChartPanel(props) {
       })
       .catch(reason => console.log(reason.message));
   };
-
-  function printData(arr) {
-    console.log(arr)
-  }
 
   async function fetchAsync() {
     // await response of fetch call

@@ -49,7 +49,6 @@ function PersonalDataCard(props) {
   }
 
   function handleChange(event) {
-    console.log(`Change State of ${event.target.name}`);
     switch (event.target.name) {
       case "firstName":
         setFirstName(event.target.value);
