@@ -68,12 +68,12 @@ function PersonalDataCard(props) {
   }
 
   return (
-    <div className="Box">
+    <div className="container personal-card">
       {!editMode ?
         < div >
-          <p>Name: {firstName} {lastName}</p>
-          <p>Address: {address}</p>
-          <p>Telefon: {telefon}</p>
+          <p>{firstName} {lastName}</p>
+          <p>{address}</p>
+          <p>{telefon}</p>
           <button onClick={(e) => props.remove(e, props.id)} className="button">
             Remove
         </button>

@@ -78,12 +78,17 @@ function Main(props) {
 
   return (
     <main className="flex-container-column">
-      <div className="flex-container">
-        <input type="button" value={'Entries (' + personalDataSet.length + ')'} className="button" onClick={() => cahngeTab(0)}></input>
-        <input type="button" value="Add entry" className="button" onClick={() => cahngeTab(1)}></input>
-        <input type="button" value="Charts" className="button" onClick={() => cahngeTab(2)}></input>
+      <div className="index-tab-container">
+        <div className={activeTab === 0 ? 'index-tab' : ''}>
+          <input type="button" value={'Entries (' + personalDataSet.length + ')'} className={activeTab === 0 ? 'button active' : 'button'} onClick={() => cahngeTab(0)}></input>
+        </div>
+        <div className={activeTab === 1 ? 'index-tab' : ''}>
+          <input type="button" value="Add entry" className={activeTab === 1 ? 'button active' : 'button'} onClick={() => cahngeTab(1)}></input>
+        </div>
+        <div className={activeTab === 2 ? 'index-tab' : ''}>
+          <input type="button" value="Charts" className={activeTab === 2 ? 'button active' : 'button'} onClick={() => cahngeTab(2)}></input>
+        </div>
       </div>
-      <br />
       <TabPanel index={0} activatedTab={activeTab}>
         {dataCards}
       </TabPanel>

@@ -6,12 +6,31 @@
   color: white;
 }
 
-.Box {
+.index-tab-container {
+  display: flex;
+  /* border-style: solid;
+  border-width: 3px;
+  border-color: blueviolet; */
+}
+.index-tab {
+  display: block;
+  background-color: rgb(96, 24, 163);
+  margin-right: 0.1em;
+  margin-top: 0.1em;
+}
+
+.container {
+  border-style: solid;
+  border-width: 5px;
+  border-color: rgb(96, 24, 163);
+}
+
+.container.personal-card {
   border-style: solid;
   border-width: 3px;
   border-color: blueviolet;
-  padding: 5px;
-  margin: 2px;
+  border-radius: 10px;
+  margin: 0.4em;
 }
 
 .flex-container {
@@ -19,8 +38,17 @@
   justify-content: center;
   align-items: center;
   border-style: solid;
-  border-width: 3px;
+  border-width: 2px;
   border-color: blueviolet;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-direction: column;
+  /* border-style: solid;
+  border-width: 3px;
+  border-color: blueviolet; */
+  margin: 0.2em 0em;
 }
 
 .grid-container {
@@ -35,7 +63,7 @@
 }
 
 .button {
-  background-color: blueviolet;
+  background-color: rgb(138, 71, 204);
   width: fit-content;
   border: none;
   color: white;
@@ -48,14 +76,12 @@
   cursor: pointer;
 }
 
-.flex-container-column {
-  display: flex;
-  flex-direction: column;
-  border-style: solid;
-  border-width: 3px;
-  border-color: blueviolet;
-  padding: 5px;
-  margin: 2px;
+.button.active {
+  background-color: rgb(96, 24, 163);
+}
+
+.button:hover {
+  background-color: mediumorchid;
 }
 
 .popup {
