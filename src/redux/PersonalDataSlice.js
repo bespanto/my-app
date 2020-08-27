@@ -1,47 +1,12 @@
 import { createSlice, createAction } from '@reduxjs/toolkit'
 import shortid from 'shortid';
 
-//actions
-export const editPersonalData = createAction(
-    "personalData/editPersonalData",
-    (obj) => {
-        return {
-            payload: {
-                obj
-            }
-        };
-    }
-);
-
-export const removePersonalData = createAction(
-    "personalData/removePersonalData",
-    (id) => {
-        return {
-            payload: {
-                id
-            }
-        };
-    }
-);
-
-export const addPersonalData = createAction(
-    "personalData/addPersonalData",
-    (obj) => {
-        return {
-            payload: {
-                obj
-            }
-        };
-    }
-);
-
-
 // selectors
 export const selectPersonalData = (state) => state.personalData
 
-export const initialState =[
+export const initialState = [
     {
-        key: shortid.generate(), 
+        key: shortid.generate(),
         id: shortid.generate(),
         firstName: "Bob",
         lastName: "Trump",
@@ -65,24 +30,26 @@ export const personalDataSlice = createSlice({
     reducers: {
         editPersonalData: (state, action) => {
             const obj = action.payload;
-            console.log(obj);
-            console.log(state);
             state.forEach(item => {
-                if (item.id === obj.id)
+                if (item.id === obj.id) {
+                    console.log(item.id)
                     item.firstName = obj.firstName;
-                item.lastName = obj.lastName;
-                item.address = obj.address;
-                item.telefon = obj.telefon;
+                    item.lastName = obj.lastName;
+                    item.address = obj.address;
+                    item.telefon = obj.telefon;
+                }
             });
         },
         removePersonalData: (state, action) => {
-            const id = {...action.payload};
-            state.filter((item) => item.id !== id);
+            const id = action.payload;
+            // state.filter(item => item.id !== id);
+            state.splice(state.findIndex(item => item.id === id),1);
         },
         addPersonalData: (state, action) => {
             const obj = action.payload;
-            console.log(obj)
             state.push(obj);
         }
     }
 })
+
+export const { addPersonalData, removePersonalData, editPersonalData } = personalDataSlice.actions;
