@@ -27,13 +27,25 @@ function ChartPanel(props) {
           l.push(k);
           d.push(obj[k]['4. close'])
         }
-        setGLabels(l);
-        setGData(d);
+        const ratio = Math.ceil(d.length / window.innerWidth) * 5
+        setGLabels(optimizeDataArrayLength(l, ratio).reverse());
+        setGData(optimizeDataArrayLength(d, ratio).reverse());
         setTitle('Weekly IBM stock time series ');
         setLabel('Close price');
       })
       .catch(reason => console.log(reason.message));
   };
+
+  function optimizeDataArrayLength(array, ratio) {
+
+    let newArr = [];
+    for (let index = 0; index < array.length; index = index + ratio) {
+      console.log(index)
+      newArr.push(array[index]);
+    }
+    console.log(newArr);
+    return newArr;
+  }
 
   async function fetchAsync() {
     // await response of fetch call
