@@ -10,7 +10,6 @@ import * as PersonalDataSlice from "./redux/PersonalDataSlice";
 
 function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
-  console.log(personalData)
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,7 +18,6 @@ function Main(props) {
   const [activeTab, setActiveTab] = useState(0);
 
   function cahngeTab(index) {
-    console.log(`activatedTab: ${index}`)
     setActiveTab(index);
   }
 

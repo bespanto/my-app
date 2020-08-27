@@ -40,7 +40,6 @@ function ChartPanel(props) {
 
     let newArr = [];
     for (let index = 0; index < array.length; index = index + ratio) {
-      console.log(index)
       newArr.push(array[index]);
     }
     console.log(newArr);

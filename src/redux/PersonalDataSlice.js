@@ -32,7 +32,6 @@ export const personalDataSlice = createSlice({
             const obj = action.payload;
             state.forEach(item => {
                 if (item.id === obj.id) {
-                    console.log(item.id)
                     item.firstName = obj.firstName;
                     item.lastName = obj.lastName;
                     item.address = obj.address;
@@ -42,7 +41,6 @@ export const personalDataSlice = createSlice({
         },
         removePersonalData: (state, action) => {
             const id = action.payload;
-            // state.filter(item => item.id !== id);
             state.splice(state.findIndex(item => item.id === id),1);
         },
         addPersonalData: (state, action) => {
