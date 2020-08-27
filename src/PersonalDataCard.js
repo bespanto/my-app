@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
+import React, { useState} from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import QRCode from 'qrcode.react';
 import "./App.css";
-import { changePersonalData } from './actions'
 import Popup from "./Popup";
+import * as PersonalDataSlice from "./redux/PersonalDataSlice";
 
 function PersonalDataCard(props) {
+  const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
   const [firstName, setFirstName] = useState(props.firstName);
   const [lastName, setLastName] = useState(props.lastName);
   const [address, setAddress] = useState(props.address);
@@ -35,7 +36,7 @@ function PersonalDataCard(props) {
       address: address,
       telefon: telefon
     }
-    dispatch(changePersonalData(newItem));
+    dispatch(PersonalDataSlice.editPersonalData(newItem));
     setEditMode(false);
   }
 
