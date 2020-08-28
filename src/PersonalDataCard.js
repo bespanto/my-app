@@ -56,21 +56,21 @@ function PersonalDataCard(props) {
   }
 
   return (
-    <div className="container personal-card">
+    <div className="personal-card">
       {!editMode ?
-        < div >
+        <div>
           <p>{firstName} {lastName}</p>
           <p>{address}</p>
           <p>{telefon}</p>
           <button onClick={(e) => props.remove(e, props.id)} className="button">
             Remove
-        </button>
+          </button>
           <button onClick={(e) => handleShowPopup(true)} className="button">
-            Show QR-Code
-        </button>
+            QR-Code
+          </button>
           <button onClick={handleEditData} className="button">
             Edit
-      </button>
+          </button>
         </div>
         :
         <PersonalDataForm
