@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import PersonalDataCard from "./PersonalDataCard";
+import PersonalDataForm from "./PersonalDataForm";
 import ChartPanel from "./ChartPanel";
 import TabPanel from "./TabPanel";
-import shortid from 'shortid';
 import "./App.css";
 import * as PersonalDataSlice from "./redux/PersonalDataSlice";
-
 
 function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
-  const [telefon, setTelefon] = useState("");
   const [activeTab, setActiveTab] = useState(0);
 
   function cahngeTab(index) {
@@ -26,42 +21,15 @@ function Main(props) {
     dispatch(PersonalDataSlice.removePersonalData(id));
   }
 
-  function handleChange(event) {
-    switch (event.target.name) {
-      case "firstName":
-        setFirstName(event.target.value);
-        break;
-      case "lastName":
-        setLastName(event.target.value);
-        break;
-      case "address":
-        setAddress(event.target.value);
-        break;
-      case "telefon":
-        setTelefon(event.target.value);
-        break;
-      default:
-        break;
-    }
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const index = shortid.generate();
+  function handleSubmit(event, formData) {
+    event.preventDefault()
     const newItem = {
-      key: index,
-      id: index,
-      firstName: firstName,
-      lastName: lastName,
-      address: address,
-      telefon: telefon
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      address: formData.address,
+      telefon: formData.telefon
     }
     dispatch(PersonalDataSlice.addPersonalData(newItem));
-    console.log(personalData);
-    setFirstName("");
-    setLastName("");
-    setAddress("");
-    setTelefon("");
   }
 
   const dataCards = personalData.map((item) => (
@@ -93,51 +61,9 @@ function Main(props) {
         {dataCards}
       </TabPanel>
       <TabPanel index={1} activatedTab={activeTab}>
-        <form onSubmit={handleSubmit}>
-          <div className="grid-container">
-            <div className="grid-item">
-              First name:
-            </div>
-            <div className="grid-item">
-              <input
-                name="firstName"
-                type="text"
-                value={firstName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-item">
-              Last name:
-            </div>
-            <div className="grid-item">
-              <input
-                name="lastName"
-                type="text"
-                value={lastName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-item">
-              Address:
-            </div>
-            <div className="grid-item">
-              <input name="address" type="text" value={address} onChange={handleChange} />
-            </div>
-            <div className="grid-item">
-              Telefon:
-            </div>
-            <div className="grid-item">
-              <input
-                name="telefon"
-                type="text"
-                value={telefon}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <br />
-          <input type="submit" value="Submit" className="button" />
-        </form>
+        <PersonalDataForm
+          submitButtonValue="Add"
+          handleSubmit={handleSubmit} />
       </TabPanel>
       <TabPanel index={2} activatedTab={activeTab}>
         <ChartPanel />

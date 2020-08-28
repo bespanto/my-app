@@ -1,12 +1,13 @@
-import React, { useState} from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from "react";
+import { useDispatch } from 'react-redux'
 import QRCode from 'qrcode.react';
 import "./App.css";
 import Popup from "./Popup";
+import PersonalDataForm from "./PersonalDataForm";
 import * as PersonalDataSlice from "./redux/PersonalDataSlice";
 
 function PersonalDataCard(props) {
-  const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
+  const [id, setId] = useState(props.id);
   const [firstName, setFirstName] = useState(props.firstName);
   const [lastName, setLastName] = useState(props.lastName);
   const [address, setAddress] = useState(props.address);
@@ -27,8 +28,12 @@ function PersonalDataCard(props) {
     setEditMode(true);
   }
 
-  function handleSaveData(id) {
-    
+  function handleSaveData(id, formData) {
+    setId(formData.id)
+    setFirstName(formData.firstName);
+    setLastName(formData.lastName);
+    setAddress(formData.address);
+    setTelefon(formData.telefon);
     const newItem = {
       id: id,
       firstName: firstName,
@@ -36,6 +41,7 @@ function PersonalDataCard(props) {
       address: address,
       telefon: telefon
     }
+
     dispatch(PersonalDataSlice.editPersonalData(newItem));
     setEditMode(false);
   }
@@ -47,25 +53,6 @@ function PersonalDataCard(props) {
   function createQRCode() {
     var newItemAsJSON = JSON.stringify(obj);
     return newItemAsJSON;
-  }
-
-  function handleChange(event) {
-    switch (event.target.name) {
-      case "firstName":
-        setFirstName(event.target.value);
-        break;
-      case "lastName":
-        setLastName(event.target.value);
-        break;
-      case "address":
-        setAddress(event.target.value);
-        break;
-      case "telefon":
-        setTelefon(event.target.value);
-        break;
-      default:
-        break;
-    }
   }
 
   return (
@@ -82,55 +69,18 @@ function PersonalDataCard(props) {
             Show QR-Code
         </button>
           <button onClick={handleEditData} className="button">
-            Edit data
+            Edit
       </button>
         </div>
         :
-        <form onSubmit={() => handleSaveData(props.id)}>
-          <div className="grid-container">
-            <div className="grid-item">
-              First name:
-          </div>
-            <div className="grid-item">
-              <input
-                name="firstName"
-                type="text"
-                value={firstName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-item">
-              Last name:
-          </div>
-            <div className="grid-item">
-              <input
-                name="lastName"
-                type="text"
-                value={lastName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-item">
-              Address:
-          </div>
-            <div className="grid-item">
-              <input name="address" type="text" value={address} onChange={handleChange} />
-            </div>
-            <div className="grid-item">
-              Telefon:
-          </div>
-            <div className="grid-item">
-              <input
-                name="telefon"
-                type="text"
-                value={telefon}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <br />
-          <input type="submit" value="Save Data" className="button" />
-        </form>
+        <PersonalDataForm
+          submitButtonValue="Save"
+          handleSubmit={handleSaveData}
+          id={id}
+          firstName={firstName}
+          lastName={lastName}
+          address={address}
+          telefon={telefon} />
       }
       {popupIsVisible &&
         <Popup text="Popup content" personalDataId={props.id} showPopup={handleShowPopup}>

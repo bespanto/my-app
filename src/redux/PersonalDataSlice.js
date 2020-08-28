@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import shortid from 'shortid';
 
 // selectors
@@ -6,7 +6,6 @@ export const selectPersonalData = (state) => state.personalData
 
 export const initialState = [
     {
-        key: shortid.generate(),
         id: shortid.generate(),
         firstName: "Bob",
         lastName: "Trump",
@@ -14,7 +13,6 @@ export const initialState = [
         telefon: "0176 342 766 22"
     },
     {
-        key: shortid.generate(),
         id: shortid.generate(),
         firstName: "Maria",
         lastName: "Dorsch",
@@ -45,6 +43,7 @@ export const personalDataSlice = createSlice({
         },
         addPersonalData: (state, action) => {
             const obj = action.payload;
+            obj.id = shortid.generate();
             state.push(obj);
         }
     }
