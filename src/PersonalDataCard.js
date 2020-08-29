@@ -16,14 +16,6 @@ function PersonalDataCard(props) {
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const obj = {
-    id: props.id,
-    firstName: props.firstName,
-    lastName: props.lastName,
-    address: props.address,
-    phone: props.phone
-  }
-
   function handleEditData() {
     setEditMode(true);
   }
@@ -51,8 +43,13 @@ function PersonalDataCard(props) {
   }
 
   function createQRCode() {
-    var newItemAsJSON = JSON.stringify(obj);
-    return newItemAsJSON;
+    return JSON.stringify({
+      id: props.id,
+      firstName: props.firstName,
+      lastName: props.lastName,
+      address: props.address,
+      phone: props.phone
+    });
   }
 
   return (
