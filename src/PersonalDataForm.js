@@ -6,7 +6,7 @@ function PersonalDataForm(props) {
     const [firstName, setFirstName] = useState(props.firstName === undefined ? '' : props.firstName);
     const [lastName, setLastName] = useState(props.lastName === undefined ? '' : props.lastName);
     const [address, setAddress] = useState(props.address === undefined ? '' : props.address);
-    const [telefon, setTelefon] = useState(props.telefon === undefined ? '' : props.telefon);
+    const [phone, setPhone] = useState(props.phone === undefined ? '' : props.phone);
 
 
     function handleSubmit(e) {
@@ -15,13 +15,13 @@ function PersonalDataForm(props) {
             firstName: firstName,
             lastName: lastName,
             address: address,
-            telefon: telefon
+            phone: phone
         }
         setId('')
         setFirstName('');
         setLastName('');
         setAddress('');
-        setTelefon('');
+        setPhone('');
         props.handleSubmit(e, formData)
     }
 
@@ -36,8 +36,8 @@ function PersonalDataForm(props) {
             case "address":
                 setAddress(event.target.value);
                 break;
-            case "telefon":
-                setTelefon(event.target.value);
+            case "phone":
+                setPhone(event.target.value);
                 break;
             default:
                 break;
@@ -76,13 +76,13 @@ function PersonalDataForm(props) {
                     <input name="address" type="text" value={address} onChange={handleChange} />
                 </div>
                 <div className="grid-item">
-                    Telefon:
+                    Phone:
           </div>
                 <div className="grid-item">
                     <input
-                        name="telefon"
+                        name="phone"
                         type="text"
-                        value={telefon}
+                        value={phone}
                         onChange={handleChange}
                     />
                 </div>

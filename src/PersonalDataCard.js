@@ -11,7 +11,7 @@ function PersonalDataCard(props) {
   const [firstName, setFirstName] = useState(props.firstName);
   const [lastName, setLastName] = useState(props.lastName);
   const [address, setAddress] = useState(props.address);
-  const [telefon, setTelefon] = useState(props.telefon);
+  const [phone, setPhone] = useState(props.phone);
   const [editMode, setEditMode] = useState(false);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function PersonalDataCard(props) {
     firstName: props.firstName,
     lastName: props.lastName,
     address: props.address,
-    telefon: props.telefon
+    phone: props.phone
   }
 
   function handleEditData() {
@@ -33,13 +33,13 @@ function PersonalDataCard(props) {
     setFirstName(formData.firstName);
     setLastName(formData.lastName);
     setAddress(formData.address);
-    setTelefon(formData.telefon);
+    setPhone(formData.phone);
     const newItem = {
       id: id,
       firstName: firstName,
       lastName: lastName,
       address: address,
-      telefon: telefon
+      phone: phone
     }
 
     dispatch(PersonalDataSlice.editPersonalData(newItem));
@@ -61,7 +61,7 @@ function PersonalDataCard(props) {
         <div>
           <p>{firstName} {lastName}</p>
           <p>{address}</p>
-          <p>{telefon}</p>
+          <p>{phone}</p>
           <button onClick={(e) => props.remove(e, props.id)} className="button">
             Remove
           </button>
@@ -80,7 +80,7 @@ function PersonalDataCard(props) {
           firstName={firstName}
           lastName={lastName}
           address={address}
-          telefon={telefon} />
+          phone={phone} />
       }
       {popupIsVisible &&
         <Popup text="Popup content" personalDataId={props.id} showPopup={handleShowPopup}>

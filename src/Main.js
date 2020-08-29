@@ -21,15 +21,54 @@ function Main(props) {
     dispatch(PersonalDataSlice.removePersonalData(id));
   }
 
-  function handleSubmit(event, formData) {
+  function handleAdd(event, formData) {
     event.preventDefault()
     const newItem = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       address: formData.address,
-      telefon: formData.telefon
+      phone: formData.phone
     }
     dispatch(PersonalDataSlice.addPersonalData(newItem));
+
+    // save data on backed
+    postData('http://localhost:8000/bussinesCards', newItem)
+      .then(response => {
+        if (response.ok)
+          return response.json()
+        else
+          throw response
+      })
+      .then(data => {
+        if (data.errors) {
+          console.error(data.errors)
+          for (let k of Object.keys(data.errors)) {
+            console.error(k + ': ' + data.errors[k].message);
+          }
+        }
+        else
+          console.log(data)
+
+      }) // parses JSON response into native JavaScript objects
+      .catch(response => console.error('Not saved ' + response.status + ': ' + response.statusText));
+  }
+
+  async function postData(url = '', data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    })
+    return response;
   }
 
   const dataCards = personalData.map((item) => (
@@ -39,7 +78,7 @@ function Main(props) {
       firstName={item.firstName}
       lastName={item.lastName}
       address={item.address}
-      telefon={item.telefon}
+      phone={item.phone}
       remove={handleRemove}
     />
   ));
@@ -63,7 +102,7 @@ function Main(props) {
       <TabPanel index={1} activatedTab={activeTab}>
         <PersonalDataForm
           submitButtonValue="Add"
-          handleSubmit={handleSubmit} />
+          handleSubmit={handleAdd} />
       </TabPanel>
       <TabPanel index={2} activatedTab={activeTab}>
         <ChartPanel />
