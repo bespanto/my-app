@@ -11,6 +11,7 @@ function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
+  const [error, setError] = useState('');
 
   function cahngeTab(index) {
     setActiveTab(index);
@@ -31,7 +32,7 @@ function Main(props) {
     }
     dispatch(PersonalDataSlice.addPersonalData(newItem));
 
-    // save data on backed
+    // save data in backend
     postData('http://localhost:8000/bussinesCards', newItem)
       .then(response => {
         if (response.ok)
@@ -44,13 +45,16 @@ function Main(props) {
           console.error(data.errors)
           for (let k of Object.keys(data.errors)) {
             console.error(k + ': ' + data.errors[k].message);
+            setError('[err]');
           }
-        }
-        else
-          console.log(data)
 
-      }) // parses JSON response into native JavaScript objects
-      .catch(response => console.error('Not saved ' + response.status + ': ' + response.statusText));
+        }
+        else {
+          console.log(data);
+          setError('');
+        }
+      })
+      .catch(() => setError('Can\'t save data in backend'));
   }
 
   async function postData(url = '', data = {}) {
@@ -95,7 +99,16 @@ function Main(props) {
         <div className={activeTab === 2 ? 'index-tab' : ''}>
           <input type="button" value="Charts" className={activeTab === 2 ? 'button active' : 'button'} onClick={() => cahngeTab(2)}></input>
         </div>
+        <div style={{
+          display: 'flex',
+          flexGrow: '3',
+          justifyContent: 'flex-end',
+          color: 'red',
+        }}>
+          {error}
+        </div>
       </div>
+
       <TabPanel index={0} activatedTab={activeTab}>
         {dataCards}
       </TabPanel>
