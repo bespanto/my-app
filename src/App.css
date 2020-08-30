@@ -58,14 +58,34 @@
 }
 
 .grid-container {
-  display: inline-grid;
+  display: grid;
   grid-template-columns: auto auto;
   padding: 10px;
 }
 
-.grid-item {
-  padding: 5px;
+
+.flex-container-form {
+  display: inline-block;
+  justify-content: center;
+  width: fit-content;
+
+}
+
+textarea {
+  border-width: 2px;
+  border-style: inset;
+  /* padding: 1px 2px; */
+  appearance: textfield;
+  resize: none;
+}
+
+.input-text-label {
   text-align: left;
+}
+
+.input-text {
+  /* text-align: left; */
+  margin-bottom: 0.5em;
 }
 
 .button {

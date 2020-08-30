@@ -46,11 +46,11 @@ function PersonalDataForm(props) {
 
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
-            <div className="grid-container">
-                <div className="grid-item">
-                    First name:
-          </div>
-                <div className="grid-item">
+            <div className="flex-container-form">
+                <div className="input-text-label">
+                    First name
+                </div>
+                <div className="input-text">
                     <input
                         name="firstName"
                         type="text"
@@ -58,10 +58,10 @@ function PersonalDataForm(props) {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="grid-item">
-                    Last name:
-          </div>
-                <div className="grid-item">
+                <div className="input-text-label">
+                    Last name
+                </div>
+                <div className="input-text">
                     <input
                         name="lastName"
                         type="text"
@@ -69,16 +69,16 @@ function PersonalDataForm(props) {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="grid-item">
-                    Address:
-          </div>
-                <div className="grid-item">
-                    <input name="address" type="text" value={address} onChange={handleChange} />
+                <div className="input-text-label">
+                    Address
                 </div>
-                <div className="grid-item">
-                    Phone:
-          </div>
-                <div className="grid-item">
+                <div className="input-text">
+                    <textarea name="address" rows="4" value={address} onChange={handleChange} />
+                </div>
+                <div className="input-text-label">
+                    Phone
+                </div>
+                <div className="input-text">
                     <input
                         name="phone"
                         type="text"
