@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { postData } from './serverConnections/connect'
 import PersonalDataCard from "./PersonalDataCard";
 import PersonalDataForm from "./PersonalDataForm";
 import ChartPanel from "./ChartPanel";
@@ -31,9 +32,11 @@ function Main(props) {
       phone: formData.phone
     }
     dispatch(PersonalDataSlice.addPersonalData(newItem));
+    sendEntryToBackend(newItem);
+  }
 
-    // save data in backend
-    postData('http://localhost:8000/bussinesCards', newItem)
+  function sendEntryToBackend(item) {
+    postData('http://localhost:8000/bussinesCards', item)
       .then(response => {
         if (response.ok)
           return response.json()
@@ -45,34 +48,32 @@ function Main(props) {
           console.error(data.errors)
           for (let k of Object.keys(data.errors)) {
             console.error(k + ': ' + data.errors[k].message);
-            setError('[err]');
+            setErrorTemporally('[err]');
           }
 
         }
         else {
           console.log(data);
-          setError('');
         }
       })
-      .catch(() => setError('Can\'t save data in backend'));
+      .catch(() => setErrorTemporally('Can\'t save data in backend'));
   }
 
-  async function postData(url = '', data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    })
-    return response;
+
+
+  async function setErrorTemporally(error){
+    setError(error);
+    window.setTimeout(()=> setError(''), 3000);
+  }
+
+
+  function syncAll() {
+    console.log(personalData);
+    personalData.forEach(
+      item => {
+        sendEntryToBackend(item);
+      }
+    )
   }
 
   const dataCards = personalData.map((item) => (
@@ -87,6 +88,7 @@ function Main(props) {
     />
   ));
 
+
   return (
     <main className="flex-container-column">
       <div className="index-tab-container">
@@ -99,17 +101,17 @@ function Main(props) {
         <div className={activeTab === 2 ? 'index-tab' : ''}>
           <input type="button" value="Charts" className={activeTab === 2 ? 'button active' : 'button'} onClick={() => cahngeTab(2)}></input>
         </div>
-        <div style={{
-          display: 'flex',
-          flexGrow: '3',
-          justifyContent: 'flex-end',
-          color: 'red',
-        }}>
-          {error}
-        </div>
       </div>
 
       <TabPanel index={0} activatedTab={activeTab}>
+        <div className="menu">
+          <div className="menu-left">
+            <span className={error === '' ? '' : 'hidden'} >{error}</span>
+          </div>
+          <div className="menu-right">
+            <input type="button" value="Sync" className="button" onClick={() => syncAll()}></input>
+          </div>
+        </div>
         {dataCards}
       </TabPanel>
       <TabPanel index={1} activatedTab={activeTab}>

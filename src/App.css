@@ -135,3 +135,24 @@ textarea {
   background-color: #282c34;
   color: white;
 }
+
+.menu {
+  display: flex;
+  /* border-style: solid; */
+  text-align: left;
+}
+
+.menu-left {
+  flex-grow: 1;
+  color: red;
+}
+
+.menu-right {
+  display: flex;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
