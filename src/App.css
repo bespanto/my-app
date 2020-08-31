@@ -125,12 +125,12 @@ textarea {
 .popup-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 10%;
-  bottom: 10%;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
   margin: auto;
   background-color: #282c34;
   color: white;

@@ -80,7 +80,7 @@ function PersonalDataCard(props) {
           phone={phone} />
       }
       {popupIsVisible &&
-        <Popup text="Popup content" personalDataId={props.id} showPopup={handleShowPopup}>
+        <Popup showPopup={handleShowPopup}>
           <div>
             <QRCode value={createQRCode()} level="L" />
           </div>
