@@ -156,3 +156,27 @@ textarea {
   opacity: 0;
   transition: visibility 0s 2s, opacity 2s linear;
 }
+
+.overflow-hidden { overflow: hidden; }
+
+.month {
+  min-width: 100%;
+  /* border-style: solid;
+  border-width: 3px;
+  border-color: blueviolet; */
+}
+
+.day {
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 2px;
+  border-color: blueviolet;
+  margin-bottom: 0.2em;;
+}
+.day-item {
+  text-align: center;
+  border-left-style: solid;
+  border-width: 1px;
+  border-color: blueviolet;
+}

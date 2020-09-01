@@ -1,13 +1,26 @@
 import React from 'react';
+import { useDispatch } from 'react-redux'
+import * as UiStateSlice from "./redux/UiStateSlice";
 import "./App.css";
-import Logo from "./logo.svg";
 
 function Header(props) {
+  const dispatch = useDispatch();
 
   return (
-    <header className="flex-container">
-      <img src={Logo} alt="logo"></img>
-      <h1>Header of {props.appName}!</h1>
+    <header className="sticky-top">
+      <nav className="navbar navbar-dark bg-dark">
+        <div className="dropdown">
+          <button className="navbar-toggler" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <span className="dropdown-item" onClick={() => dispatch(UiStateSlice.setActiveMenuItem(0))}>Calendar</span>
+            <span className="dropdown-item" onClick={() => dispatch(UiStateSlice.setActiveMenuItem(1))}>Peronal Data Entries</span>
+            <span className="dropdown-item" onClick={() => dispatch(UiStateSlice.setActiveMenuItem(2))}>New Peronal Data Entry</span>
+            <span className="dropdown-item" onClick={() => dispatch(UiStateSlice.setActiveMenuItem(3))}>Cahrts</span>
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }

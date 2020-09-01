@@ -11,7 +11,7 @@ function App() {
     <div className="App">
         <Header appName={"My App"} />
         <Main firstName={"Max"} />
-        <Footer />
+        {/* <Footer /> */}
     </div>
   );
 }

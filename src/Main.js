@@ -5,11 +5,14 @@ import PersonalDataCard from "./PersonalDataCard";
 import PersonalDataForm from "./PersonalDataForm";
 import ChartPanel from "./ChartPanel";
 import TabPanel from "./TabPanel";
+import Month from "./Month";
 import "./App.css";
 import * as PersonalDataSlice from "./redux/PersonalDataSlice";
+import * as UiStateSlice from "./redux/UiStateSlice";
 
 function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
+  const uiState = useSelector((state) => UiStateSlice.selectUiState(state))
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [error, setError] = useState('');
@@ -61,9 +64,9 @@ function Main(props) {
 
 
 
-  async function setErrorTemporally(error){
+  async function setErrorTemporally(error) {
     setError(error);
-    window.setTimeout(()=> setError(''), 3000);
+    window.setTimeout(() => setError(''), 3000);
   }
 
 
@@ -90,38 +93,31 @@ function Main(props) {
 
 
   return (
-    <main className="flex-container-column">
-      <div className="index-tab-container">
-        <div className={activeTab === 0 ? 'index-tab' : ''}>
-          <input type="button" value={'Entries (' + personalData.length + ')'} className={activeTab === 0 ? 'button active' : 'button'} onClick={() => cahngeTab(0)}></input>
-        </div>
-        <div className={activeTab === 1 ? 'index-tab' : ''}>
-          <input type="button" value="Add entry" className={activeTab === 1 ? 'button active' : 'button'} onClick={() => cahngeTab(1)}></input>
-        </div>
-        <div className={activeTab === 2 ? 'index-tab' : ''}>
-          <input type="button" value="Charts" className={activeTab === 2 ? 'button active' : 'button'} onClick={() => cahngeTab(2)}></input>
-        </div>
+    <main >
+      <div className="position-relative overflow-hidden">
+        <TabPanel index={0} activatedTab={uiState.activeMenuItem}>
+          <Month />
+        </TabPanel>
+        <TabPanel index={1} activatedTab={uiState.activeMenuItem}>
+          <div className="menu">
+            <div className="menu-left">
+              <span className={error === '' ? '' : 'hidden'} >{error}</span>
+            </div>
+            <div className="menu-right">
+              <input type="button" value="Sync" className="button" onClick={() => syncAll()}></input>
+            </div>
+          </div>
+          {dataCards}
+        </TabPanel>
+        <TabPanel index={2} activatedTab={uiState.activeMenuItem}>
+          <PersonalDataForm
+            submitButtonValue="Add"
+            handleSubmit={handleAdd} />
+        </TabPanel>
+        <TabPanel index={3} activatedTab={uiState.activeMenuItem}>
+          <ChartPanel />
+        </TabPanel>
       </div>
-
-      <TabPanel index={0} activatedTab={activeTab}>
-        <div className="menu">
-          <div className="menu-left">
-            <span className={error === '' ? '' : 'hidden'} >{error}</span>
-          </div>
-          <div className="menu-right">
-            <input type="button" value="Sync" className="button" onClick={() => syncAll()}></input>
-          </div>
-        </div>
-        {dataCards}
-      </TabPanel>
-      <TabPanel index={1} activatedTab={activeTab}>
-        <PersonalDataForm
-          submitButtonValue="Add"
-          handleSubmit={handleAdd} />
-      </TabPanel>
-      <TabPanel index={2} activatedTab={activeTab}>
-        <ChartPanel />
-      </TabPanel>
     </main>
   );
 }
