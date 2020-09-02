@@ -14,13 +14,8 @@ function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
   const uiState = useSelector((state) => UiStateSlice.selectUiState(state))
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState(0);
   const [error, setError] = useState('');
-
-  function cahngeTab(index) {
-    setActiveTab(index);
-  }
-
+  
   function handleRemove(e, id) {
     e.preventDefault();
     dispatch(PersonalDataSlice.removePersonalData(id));

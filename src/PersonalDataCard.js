@@ -38,10 +38,6 @@ function PersonalDataCard(props) {
     setEditMode(false);
   }
 
-  function handleShowPopup(isVisible) {
-    setPopupIsVisible(isVisible);
-  }
-
   function createQRCode() {
     return JSON.stringify({
       id: props.id,
@@ -62,7 +58,7 @@ function PersonalDataCard(props) {
           <button onClick={(e) => props.remove(e, props.id)} className="button">
             Remove
           </button>
-          <button onClick={(e) => handleShowPopup(true)} className="button">
+          <button onClick={() => setPopupIsVisible(true)} className="button">
             QR-Code
           </button>
           <button onClick={handleEditData} className="button">
@@ -80,7 +76,7 @@ function PersonalDataCard(props) {
           phone={phone} />
       }
       {popupIsVisible &&
-        <Popup showPopup={handleShowPopup}>
+        <Popup handleClose={() => setPopupIsVisible(false)}>
           <div>
             <QRCode value={createQRCode()} level="L" />
           </div>
