@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import * as DateUtils from "../DateUtils";
 
 // selectors
 export const selectBookingEntries = (state) => state.bookingEntries;
 export const selectBookingEntryByDay = (state, date) =>{
-  const day = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-  state.bookingEntries.find((item) => item.day === day)
+  return state.bookingEntries.find((item) => item.day === DateUtils.getDateString(date))
 };
 
 const bookingEntriesMap = [

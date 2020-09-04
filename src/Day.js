@@ -1,15 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as BookingEntriesSlice from "./redux/BookingEntriesSlice";
 import * as DateUtils from "./DateUtils";
 import "./App.css";
 
 function Day(props) {
-  const bookingEntries = useSelector((state) =>
-    BookingEntriesSlice.selectBookingEntries(state)
+  const bookingEntry = useSelector((state) =>
+    BookingEntriesSlice.selectBookingEntryByDay(state, props.date)
   );
-  const actDateStr = props.date.getFullYear() + "-" + props.date.getMonth() + "-" + props.date.getDate()
-  const bookingEntry = bookingEntries.find((item) => item.day === actDateStr);
 
   return (
     <div className="row day">

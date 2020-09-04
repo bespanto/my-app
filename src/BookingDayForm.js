@@ -5,42 +5,29 @@ import * as DateUtils from "./DateUtils";
 
 function BookingDayForm(props) {
   const dispatch = useDispatch();
-  const bookingEntries = useSelector((state) =>
-    BookingEntriesSlice.selectBookingEntries(state)
+  const bookingEntry = useSelector((state) =>
+    BookingEntriesSlice.selectBookingEntryByDay(state, props.date)
   );
-  console.log(props.date.getFullYear());
-  const actDateStr = props.date.getFullYear() + "-" + props.date.getMonth() + "-" + props.date.getDate()
-  const bookingEntry = bookingEntries.find((item) => item.day === actDateStr);
-
-  console.log(bookingEntry);
-  const [editStart, setEditStart] = useState(
-    bookingEntry === undefined ? "" : bookingEntry.start
-  );
-  const [editEnd, setEditEnd] = useState(
-    bookingEntry === undefined ? "" : bookingEntry.end
-  );
-  const [editBreak, setEditBreak] = useState(
-    bookingEntry === undefined ? "" : bookingEntry.break
-  );
+  const [editStart, setEditStart] = useState(bookingEntry === undefined ? "" : bookingEntry.start);
+  const [editEnd, setEditEnd] = useState(bookingEntry === undefined ? "" : bookingEntry.end);
+  const [editBreak, setEditBreak] = useState(bookingEntry === undefined ? "" : bookingEntry.break);
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log("handleSubmit");
     dispatch(
       BookingEntriesSlice.editBookingEntry(
         {
-        day: actDateStr,
-        start: editStart,
-        end: editEnd,
-        break: editBreak,
-      }
+          day: DateUtils.getDateString(props.date),
+          start: editStart,
+          end: editEnd,
+          break: editBreak,
+        }
       )
     );
-    props.closePopup();
+    props.handleClose();
   }
 
   function handleChange(event) {
-    console.log(event.target.value);
     switch (event.target.name) {
       case "start":
         setEditStart(event.target.value);

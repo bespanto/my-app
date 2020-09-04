@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as BookingEntriesSlice from "./redux/BookingEntriesSlice";
 import * as DateUtils from "./DateUtils";
 import Day from "./Day";
 import Popup from "./Popup";
@@ -9,12 +7,9 @@ import shortid from "shortid";
 import "./App.css";
 
 function Month(props) {
-  const [editDate, setEditDate] = useState('');
+  const [bookingDateToEdit, setBookingDateToEdit] = useState('');
   const [now, setNow] = useState(new Date());
   const [popupIsVisible, setPopupIsVisible] = useState(false);
-  const bookingEntries = useSelector((state) =>
-    BookingEntriesSlice.selectBookingEntries(state)
-  );
 
   function getDayComponents() {
     let days = [];
@@ -29,9 +24,6 @@ function Month(props) {
         <Day
           key={shortid.generate()}
           date={actDate}
-          // start={bookingEntry !== undefined ? bookingEntry.start : ""}
-          // end={bookingEntry !== undefined ? bookingEntry.end : ""}
-          // break={bookingEntry !== undefined ? bookingEntry.break : ""}
           showPopup={showPopup}
         />
       );
@@ -52,14 +44,8 @@ function Month(props) {
   }
 
   function showPopup(date) {
-    console.log("showPopup: " + date);
-    setEditDate(date);
+    setBookingDateToEdit(date);
     setPopupIsVisible(true);
-  }
-
-  function closePopup() {
-    console.log("closePopup");
-    setPopupIsVisible(false);
   }
 
   return (
@@ -97,11 +83,11 @@ function Month(props) {
       </div>
       <div>{getDayComponents()}</div>
       {popupIsVisible && (
-        <Popup handleClose={closePopup}>
+        <Popup handleClose={() => setPopupIsVisible(false)}>
           <BookingDayForm
-            date={editDate}
+            date={bookingDateToEdit}
             submitButtonValue="Save"
-            closePopup={closePopup}
+            handleClose={() => setPopupIsVisible(false)}
           />
         </Popup>
       )}
