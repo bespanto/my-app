@@ -79,13 +79,8 @@ textarea {
   resize: none;
 }
 
-.input-text-label {
-  text-align: left;
-}
-
-.input-text {
-  /* text-align: left; */
-  margin-bottom: 0.5em;
+.time-input {
+  width: 5em;
 }
 
 .button {
@@ -190,6 +185,7 @@ textarea {
   border-color: blueviolet;
   margin-bottom: 0.2em;;
 }
+
 .day-item {
   text-align: center;
   border-left-style: solid;
