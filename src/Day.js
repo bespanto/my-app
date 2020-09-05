@@ -29,7 +29,7 @@ function Day(props) {
         <input
           type="button"
           value="Edit"
-          className="button-small"
+          className="button"
           onClick={() => props.showPopup(props.date)}
         ></input>
       </div>

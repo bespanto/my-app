@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as BookingEntriesSlice from "./redux/BookingEntriesSlice";
+import * as UiStateSlice from "./redux/UiStateSlice";
 import * as DateUtils from "./DateUtils";
 
 function BookingDayForm(props) {
@@ -14,17 +15,50 @@ function BookingDayForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(
-      BookingEntriesSlice.editBookingEntry(
-        {
-          day: DateUtils.getDateString(props.date),
-          start: editStart,
-          end: editEnd,
-          break: editBreak,
-        }
-      )
-    );
-    props.handleClose();
+
+    let error = '';
+    if (!isTimeEntryOk(editStart))
+      error = 'Start has not right form hh:mm';
+    else
+      if (!isTimeEntryOk(editEnd))
+        error = 'End has not right form hh:mm';
+      else if (!isTimeEntryOk(editBreak))
+        error = 'Break has not right form hh:mm';
+
+    if (error !== '')
+      dispatch(UiStateSlice.setCurrentError(error));
+    else {
+      dispatch(UiStateSlice.setCurrentError(''));
+      dispatch(
+        BookingEntriesSlice.editBookingEntry(
+          {
+            day: DateUtils.getDateString(props.date),
+            start: editStart,
+            end: editEnd,
+            break: editBreak,
+          }
+        )
+      );
+      props.handleClose();
+    }
+  }
+
+  // Check format hh:mm
+  function isTimeEntryOk(timeField) {
+    const words = timeField.split(':');
+    // if (words.length === 2 && Number.isInteger(words[0]) && words[0] < 24 && words[0] >= 0 && Number.isInteger(words[1]) && words[0] < 60 && words[0] >= 0)
+    const hours = filterInt(words[0]);
+    const minutes = filterInt(words[1]);
+    if (words.length === 2 && hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60)
+      return true;
+    else
+      return false
+  }
+
+  function filterInt(value) {
+    if (/^(\-|\+)?([0-9]+|Infinity)$/.test(value))
+      return Number(value);
+    return NaN;
   }
 
   function handleChange(event) {

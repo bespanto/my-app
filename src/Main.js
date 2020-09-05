@@ -95,7 +95,7 @@ function Main(props) {
         </TabPanel>
         <TabPanel index={1} activatedTab={uiState.activeMenuItem}>
           <div className="menu">
-            <div className="menu-left">
+            <div className="menu-left error">
               <span className={error === '' ? '' : 'hidden'} >{error}</span>
             </div>
             <div className="menu-right">

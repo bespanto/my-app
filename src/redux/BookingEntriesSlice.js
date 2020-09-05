@@ -31,6 +31,17 @@ export const bookingEntriesSlice = createSlice({
   reducers: {
     editBookingEntry: (state, action) => {
       console.log(action.payload);
+      let found = false;
+      state.forEach(element => {
+        if(element.day  === action.payload.day){
+          element.start = action.payload.start;
+          element.end = action.payload.end;
+          element.break = action.payload.break;
+          found = true;
+        }
+      });
+      if(!found)
+        state.push(action.payload);
     },
   },
 });

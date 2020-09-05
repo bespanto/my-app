@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const selectUiState = (state) => state.uiState
 
 export const initialState = {
-        activeMenuItem: 0
+        activeMenuItem: 0,
+        currentError: ''
     }
 
 //slice
@@ -13,10 +14,12 @@ export const uiStateSlice = createSlice({
     initialState: initialState,
     reducers: {
         setActiveMenuItem: (state, action) => {
-            console.log(action.payload)
             state.activeMenuItem = action.payload;
+        },
+        setCurrentError: (state, action) => {
+            state.currentError = action.payload;
         }
     }
 })
 
-export const { setActiveMenuItem } = uiStateSlice.actions;
+export const { setActiveMenuItem, setCurrentError } = uiStateSlice.actions;
