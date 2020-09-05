@@ -12,6 +12,7 @@ function BookingDayForm(props) {
   const [editStart, setEditStart] = useState(bookingEntry === undefined ? "" : bookingEntry.start);
   const [editEnd, setEditEnd] = useState(bookingEntry === undefined ? "" : bookingEntry.end);
   const [editBreak, setEditBreak] = useState(bookingEntry === undefined ? "" : bookingEntry.break);
+  const [error, setError] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -26,9 +27,9 @@ function BookingDayForm(props) {
         error = 'Break has not right form hh:mm';
 
     if (error !== '')
-      dispatch(UiStateSlice.setCurrentError(error));
+      setError(error);
     else {
-      dispatch(UiStateSlice.setCurrentError(''));
+      setError('');
       dispatch(
         BookingEntriesSlice.editBookingEntry(
           {
@@ -79,6 +80,7 @@ function BookingDayForm(props) {
 
   return (
     <div>
+      <div className="error">{error}</div>
       <p>{DateUtils.getDateString(props.date)}</p>
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>

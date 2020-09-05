@@ -14,8 +14,7 @@ function Main(props) {
   const personalData = useSelector((state) => PersonalDataSlice.selectPersonalData(state))
   const uiState = useSelector((state) => UiStateSlice.selectUiState(state))
   const dispatch = useDispatch();
-  const [error, setError] = useState('');
-  
+
   function handleRemove(e, id) {
     e.preventDefault();
     dispatch(PersonalDataSlice.removePersonalData(id));
@@ -30,48 +29,6 @@ function Main(props) {
       phone: formData.phone
     }
     dispatch(PersonalDataSlice.addPersonalData(newItem));
-    sendEntryToBackend(newItem);
-  }
-
-  function sendEntryToBackend(item) {
-    postData('http://localhost:8000/bussinesCards', item)
-      .then(response => {
-        if (response.ok)
-          return response.json()
-        else
-          throw response
-      })
-      .then(data => {
-        if (data.errors) {
-          console.error(data.errors)
-          for (let k of Object.keys(data.errors)) {
-            console.error(k + ': ' + data.errors[k].message);
-            setErrorTemporally('[err]');
-          }
-
-        }
-        else {
-          console.log(data);
-        }
-      })
-      .catch(() => setErrorTemporally('Can\'t save data in backend'));
-  }
-
-
-
-  async function setErrorTemporally(error) {
-    setError(error);
-    window.setTimeout(() => setError(''), 3000);
-  }
-
-
-  function syncAll() {
-    console.log(personalData);
-    personalData.forEach(
-      item => {
-        sendEntryToBackend(item);
-      }
-    )
   }
 
   const dataCards = personalData.map((item) => (
@@ -94,14 +51,6 @@ function Main(props) {
           <Month />
         </TabPanel>
         <TabPanel index={1} activatedTab={uiState.activeMenuItem}>
-          <div className="menu">
-            <div className="menu-left error">
-              <span className={error === '' ? '' : 'hidden'} >{error}</span>
-            </div>
-            <div className="menu-right">
-              <input type="button" value="Sync" className="button" onClick={() => syncAll()}></input>
-            </div>
-          </div>
           {dataCards}
         </TabPanel>
         <TabPanel index={2} activatedTab={uiState.activeMenuItem}>

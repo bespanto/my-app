@@ -52,7 +52,6 @@ function Month(props) {
   }
 
   function closePopup(date) {
-    dispatch(UiStateSlice.setCurrentError(''));
     setPopupIsVisible(false);
   }
 
